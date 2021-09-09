@@ -1,9 +1,10 @@
 // TODO: Add the useState hook to the import from 'react'
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import PhotoBox from './PhotoBox';
 // TODO: Import the StylistDetailsModal component
+import StylistDetailsModal from './StylistDetailsModal';
 
 
 const PhotoGrid = styled.div`
@@ -30,10 +31,20 @@ const Stylist = (props) => {
     const stylist = props.oneStylist;
 
     // TODO: Add a state variable called open and initialize it to the boolean value false.
-
-
+    
+    const [open, setOpen]= useState( false ); //calling the useState function (coming from React itself)
+    //when we send in a value it spits out an array with 2 elements
+    //on the left are the 2 things it's spitting out (destructuring - ______, set_____)
+    
     // TODO: Create an event handler function called handleOpenModal that sets 'open' to true.
+    const handleOpenModal = () => {
+        setOpen(true);
+    }
 
+
+    const handleCloseModal = () => {
+        setOpen(false);
+    }
 
     // TODO: Create an event handler function called handleCloseModal that sets 'open' back to false.
 
@@ -42,8 +53,10 @@ const Stylist = (props) => {
         // TODO: Add a fragment here so it can wrap and return both the PhotoBox and StylistDetailsModal components. Bonus: use the shorthand syntax!
         // TODO: On the <PhotoBox> component implementation, add the handleOpen prop as an attribute and pass in the event handler that opens the modal.
         // TODO: Implement the StylistDetailsModal once you've imported it at the top. Add attributes for the props stylist, show, and handleClose - then pass in the appropriate values from this component.
-        <PhotoBox id={`photo-box-${stylist.id}`} stylist={stylist} />
-
+        <>
+            <PhotoBox id={`photo-box-${stylist.id}`} stylist={stylist} handleOpen={handleOpenModal} />
+            <StylistDetailsModal stylist={stylist} show={open} handleClose={handleCloseModal} />
+        </>
     );
 }
 
